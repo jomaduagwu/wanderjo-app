@@ -15,8 +15,9 @@ const travelDestinationSchema = new Schema({
     },
     reviews: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'Review',
+        travelerName: { type: String, required: true },
+        rating: { type: Number, required: true },
+        comment: { type: String, required: true },
       },
     ],
     ratings: {
