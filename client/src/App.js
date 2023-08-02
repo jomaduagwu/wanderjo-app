@@ -1,24 +1,27 @@
-import logo from './logo.svg';
 import './App.css';
+import React  from 'react';
+import 'antd/dist/antd.css'; // Import Ant Design styles
+import { Layout } from 'antd'; // Import Ant Design components
+import Navbar from './components/Navbar'; // Import your custom AppNavbar component
+import LoginForm  from './components/LoginForm';
+import SignupForm from  './components/SignupForm';
+import TravelSearch from './pages/TravelSearch';
+
+const { Header, Content } = Layout;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Header>
+        <Navbar />
+      </Header>
+      <Content  style ={{ padding:  '20px'}}>
+        <div>
+          <h1>WanderJo Travel Planner</h1>
+          <TravelSearch />
+        </div>
+      </Content>
+    </Layout>
   );
 }
 
