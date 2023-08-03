@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Layout, Menu, Modal, Tabs } from 'antd'; // Import Ant Design components
+import { NavLink, Link } from 'react-router-dom';
+import { Row, Layout, Menu, Modal, Tabs } from 'antd'; // Import Ant Design components
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
 
