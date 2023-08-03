@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './style.css';
 
 const TravelSearch = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -28,16 +29,17 @@ const TravelSearch = () => {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+    console.log('Search query:', e );
   };
 
   return (
-    <div>
+    <div className='centered-container'>
       <form onSubmit={handleSearch}>
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Enter your search query"
+          placeholder="Enter your destination"
         />
         <button type="submit">Search</button>
       </form>
