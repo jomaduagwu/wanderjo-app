@@ -1,8 +1,8 @@
 import React from 'react';
-import AppHeader from '../components/AppHeader';
 import TravelSearch from './TravelSearch';
 import DestinationCard from '../components/DestinationCard';
-import AppFooter from '../components/AppFooter';
+import PageContent from '../components/PageContent';
+
 
 
 const Home = () => {
@@ -33,7 +33,7 @@ const Home = () => {
           <DestinationCard key={index} {...result} />
         ))}
       </div>
-      <AppFooter />
+      <PageContent  />
     </div>
   );
 };

@@ -9,7 +9,7 @@ const Logo = () => {
         <img
         src={WanderJoLogo}
         alt="WanderJo Travel Planner"
-        style={{  marginRight: '10px' }}
+        style={{  marginRight: '10px', height: '80px' }}
         />
         </Link>
     </div>

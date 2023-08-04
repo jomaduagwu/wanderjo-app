@@ -15,12 +15,15 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import AppHeader from './components/AppHeader'; 
 import Home from './pages/Home';
 import SavedDestinations from './pages/SavedDestinations';
-import Logo from './components/Logo';
+import PageContent from './components/PageContent';
+import AppFooter from './components/AppFooter';
+import Navbar from './components/Navbar';
 
 import './App.css';
 import './index.css';
+import AppNavbar from './components/Navbar';
 
-const { Header } = Layout;
+const { Header: AntdHeader } = Layout;
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -51,15 +54,20 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <>
-        <Header style={{ background: '#fff', padding: '0 20px' }}>
+        <Navbar  />
+        <AntdHeader>
+          <AppHeader  />
+        </AntdHeader>
+        {/* <Header style={{ background: '#1890ff', padding: '0 20px' }}>
           <AppHeader />
-        </Header>
-        <Logo />
+        </Header> */}
+        {/* <Logo /> */}
           <Switch>
             <Route exact path='/' component={Home} />
             <Route exact path='/saved' component={SavedDestinations} />
             <Route render={() => <h1 className='display-2'>Wrong page!</h1>} />
           </Switch>
+          <AppFooter />  
         </>
       </Router>
     </ApolloProvider>
