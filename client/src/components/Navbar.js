@@ -41,7 +41,7 @@ const AppNavbar = () => {
       </Header>
       {/* set modal data up */}
       <Modal
-        visible={showModal}
+        open={showModal}
         onCancel={() => setShowModal(false)}
         footer={null}
       >

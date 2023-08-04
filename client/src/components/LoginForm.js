@@ -7,6 +7,8 @@ import Auth from '../utils/auth';
 
 const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
+  const [validated] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const [login, { loading , error, data}] = useMutation(LOGIN_USER);
 
@@ -18,6 +20,14 @@ const LoginForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+  const form= event.currentTarget;
+  if (form.checkValidity() === false) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+    console.log('Form submitted');
+
     try {
       const { data } = await login({ variables: { ...userFormData } });
 
@@ -26,18 +36,24 @@ const LoginForm = () => {
       Auth.login(data.login.token);
     } catch (err) {
       console.error(err);
-
+      setShowAlert(true);
       // Check the error object returned by Apollo Client
-      console.log('Error:', error);
+      console.log('Error:', err);
 
       message.error('Something went wrong with your login credentials!');
     }
+    console.log('Form submission finished');
 
     setUserFormData({
+      username: '',
       email: '',
       password: '',
     });
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
