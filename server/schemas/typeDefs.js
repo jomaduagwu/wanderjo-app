@@ -11,6 +11,7 @@ const typeDefs = gql`
   type Auth {
     token: ID!
     profile: Profile
+    user: User
   }
 # travel destinations and their info
   type TravelDestination {
@@ -31,33 +32,6 @@ type Review {
   comment: String!
 }
 
-  type Query {
-    profiles: [Profile]!
-    profile(profileId: ID!): Profile
-    # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
-    me: Profile
-    travelDestinations: [TravelDestination]!
-    travelDestination(destinationId: ID!): TravelDestination
-  }
-
-  type Mutation {
-    addProfile(name: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): Auth
-    updateProfile(name: String, email: String, password: String): Profile
-    removeProfile: Profile
-    addTravelDestination(
-      name: String!
-      description: String!
-      location: [String]!
-    ): TravelDestination
-    addReview(
-      destinationId: ID!
-      travelerName: String!
-      rating: Float!
-      comment: String!
-    ): TravelDestination
-    
-  }
   type Category {
     _id: ID
     name: String
@@ -79,13 +53,13 @@ type Review {
     products: [Product]
   }
 
-  type User {
-    _id: ID
-    firstName: String
-    lastName: String
-    email: String
-    orders: [Order]
-  }
+  # type User {
+  #   _id: ID
+  #   firstName: String
+  #   lastName: String
+  #   email: String
+  #   orders: [Order]
+  # }
 
   type Checkout {
     session: ID
@@ -97,20 +71,41 @@ type Review {
   }
 
   type Query {
+    profiles: [Profile]!
+    profile(profileId: ID!): Profile
+    # Because we have the context functionality in place to check a JWT and decode its data, we can use a query that will always find and return the logged in user's data
+    me: Profile
+    travelDestinations: [TravelDestination]!
+    travelDestination(destinationId: ID!): TravelDestination
     categories: [Category]
     products(category: ID, name: String): [Product]
     product(_id: ID!): Product
-    user: User
+    # user: User
     order(_id: ID!): Order
     checkout(products: [ID]!): Checkout
   }
 
   type Mutation {
+    addProfile(name: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    updateProfile(name: String, email: String, password: String): Profile
+    removeProfile: Profile
+    addTravelDestination(
+      name: String!
+      description: String!
+      location: [String]!
+    ): TravelDestination
+    addReview(
+      destinationId: ID!
+      travelerName: String!
+      rating: Float!
+      comment: String!
+    ): TravelDestination
     addUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
     addOrder(products: [ID]!): Order
     updateUser(firstName: String, lastName: String, email: String, password: String): User
     updateProduct(_id: ID!, quantity: Int!): Product
-    login(email: String!, password: String!): Auth
+    
   }
 `;
 
