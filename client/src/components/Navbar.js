@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
-import { Row, Layout, Menu, Modal, Tabs } from 'antd'; // Import Ant Design components
+import { Link } from 'react-router-dom';
+import { Layout, Menu, Modal } from 'antd';
 import SignUpForm from './SignupForm';
 import LoginForm from './LoginForm';
 
 import Auth from '../utils/auth';
 
-const { Header } = Layout; // Destructure Header component from Layout
-const { TabPane } = Tabs; // Destructure TabPane component from Tabs
+const { Header } = Layout;
 
-const AppNavbar = () => {
-  // set modal display state
+const AppNavbar = ({ onTravelSearchClick }) => {
   const [showModal, setShowModal] = useState(false);
+  const [activeTab, setActiveTab] = useState('login');
+
+  const handleTabChange = (key) => {
+    setActiveTab(key);
+  };
 
   return (
     <>
@@ -19,12 +22,17 @@ const AppNavbar = () => {
         <div className="logo" />
         <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']} className='d-flex'>
           <Menu.Item key="home" as={Link} to='/'>
-            Travel Destination Search
+            Home Search
           </Menu.Item>
-          <Menu.Item key="search" as={Link} to='/'>
-            Search For A Destination
+
+          <Menu.Item key="signup" onClick={() => handleTabChange('signup')}>
+            Sign Up
           </Menu.Item>
-          {/* if user is logged in show saved destinations and logout */}
+
+          <Menu.Item key="login" onClick={() => handleTabChange('login')}>
+            Login
+          </Menu.Item>
+          
           {Auth.loggedIn() ? (
             <>
               <Menu.Item key="saved" as={Link} to='/saved'>
@@ -32,28 +40,20 @@ const AppNavbar = () => {
               </Menu.Item>
               <Menu.Item key="logout" onClick={Auth.logout}>Logout</Menu.Item>
             </>
-          ) : (
-            <Menu.Item key="login-signup" onClick={() => setShowModal(true)}>
-              Login/Sign Up
-            </Menu.Item>
-          )}
+          ) : null}
         </Menu>
       </Header>
-      {/* set modal data up */}
       <Modal
-        open={showModal}
+        visible={showModal}
         onCancel={() => setShowModal(false)}
         footer={null}
       >
-        {/* tab container to do either signup or login component */}
-        <Tabs defaultActiveKey='login'>
-          <TabPane tab='Login' key='login'>
-            <LoginForm handleModalClose={() => setShowModal(false)} />
-          </TabPane>
-          <TabPane tab='Sign Up' key='signup'>
-            <SignUpForm handleModalClose={() => setShowModal(false)} />
-          </TabPane>
-        </Tabs>
+        {/* Render LoginForm or SignUpForm based on activeTab */}
+        {activeTab === 'login' ? (
+          <LoginForm handleModalClose={() => setShowModal(false)} />
+        ) : (
+          <SignUpForm handleModalClose={() => setShowModal(false)} />
+        )}
       </Modal>
     </>
   );

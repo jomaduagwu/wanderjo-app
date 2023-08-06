@@ -37,3 +37,24 @@
     transform: rotate(360deg);
   }
 }
+header nav {
+  background-color: darkblue;
+  color: white;
+  padding: 10px;
+  display: flex; /* Make the buttons align in a row */
+  gap: 10px; /* Add 10px gap between each button */
+}
+
+nav button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+nav button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}

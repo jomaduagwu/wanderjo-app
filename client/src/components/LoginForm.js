@@ -1,99 +1,73 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, message } from 'antd'; // Import Ant Design components
-
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../utils/mutations';
 import Auth from '../utils/auth';
 
-const LoginForm = () => {
-  const [userFormData, setUserFormData] = useState({ email: '', password: '' });
-  const [validated] = useState(false);
-  const [showAlert, setShowAlert] = useState(false);
+const LoginForm = ({ handleModalClose }) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-  const [login, { loading , error, data}] = useMutation(LOGIN_USER);
+  const [loginUser, { loading }] = useMutation(LOGIN_USER);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    if (name === 'email') {
+      setEmail(value);
+    } else if (name === 'password') {
+      setPassword(value);
+    }
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-  const form= event.currentTarget;
-  if (form.checkValidity() === false) {
-    event.preventDefault();
-    event.stopPropagation();
-  }
-
-    console.log('Form submitted');
-
     try {
-      const { data } = await login({ variables: { ...userFormData } });
+      const { data } = await loginUser({
+        variables: { email, password },
+      });
 
-      console.log('Server response:', data);
-
-      Auth.login(data.login.token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-      // Check the error object returned by Apollo Client
-      console.log('Error:', err);
-
-      message.error('Something went wrong with your login credentials!');
+      const { token } = data.login;
+      Auth.login(token);
+      handleModalClose(); // Close the login modal after successful login
+      // You may also want to handle other logic after successful login, like updating state or displaying a success message.
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError('An error occurred during login. Please try again.');
     }
-    console.log('Form submission finished');
-
-    setUserFormData({
-      username: '',
-      email: '',
-      password: '',
-    });
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <>
-      <Form onSubmit={handleFormSubmit}>
-        <Form.Item
-          label="Email"
+    <form onSubmit={handleFormSubmit}>
+      <div className="form-group">
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          className="form-control"
+          id="email"
           name="email"
-          rules={[{ required: true, message: 'Email is required!' }]}
-        >
-          <Input
-            type="text"
-            placeholder="Your email"
-            name="email"
-            onChange={handleInputChange}
-            value={userFormData.email}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Password"
+          value={email}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          className="form-control"
+          id="password"
           name="password"
-          rules={[{ required: true, message: 'Password is required!' }]}
-        >
-          <Input.Password
-            placeholder="Your password"
-            name="password"
-            onChange={handleInputChange}
-            value={userFormData.password}
-          />
-        </Form.Item>
-
-        <Button
-          disabled={!(userFormData.email && userFormData.password)}
-          type="primary"
-          htmlType="submit"
-        >
-          Submit
-        </Button>
-      </Form>
-    </>
+          value={password}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
+      {error && <div className="alert alert-danger">{error}</div>}
+      <button type="submit" className="btn btn-primary" disabled={loading}>
+        Login
+      </button>
+    </form>
   );
 };
 
