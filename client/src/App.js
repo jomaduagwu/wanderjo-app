@@ -1,61 +1,9 @@
-<<<<<<< HEAD
-import React  from 'react';
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-  createHttpLink,
-} from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
-
-import 'antd/dist/reset.css'; 
-import { Layout } from 'antd'; 
-
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-import AppHeader from './components/AppHeader'; 
-import Home from './pages/Home';
-import SavedDestinations from './pages/SavedDestinations';
-import PageContent from './components/PageContent';
-import AppFooter from './components/AppFooter';
-import Navbar from './components/Navbar';
-
-import './App.css';
-import './index.css';
-import AppNavbar from './components/Navbar';
-
-const { Header: AntdHeader } = Layout;
-
-// Construct our main GraphQL API endpoint
-const httpLink = createHttpLink({
-  uri: '/graphql',
-});
-
-// Construct request middleware that will attach the JWT token to every request as an `authorization` header
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = localStorage.getItem('id_token');
-  // return the headers to the context so httpLink can read them
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  };
-});
-
-const client = new ApolloClient({
-  // Set up our client to execute the `authLink` middleware prior to making the request to our GraphQL API
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
-=======
 import React, { useState } from 'react';
 import Header from './components/Header';
 import SearchBar from './components/SearchBar';
 import DestinationList from './components/DestinationList';
 import AttractionDetails from './components/AttractionDetails';
-import ImageGallery from './components/ImageGallery'; // Import the ImageGallery component
+import ImageGallery from './components/ImageGallery'; 
 import './App.css';
 
 const App = () => {
@@ -129,32 +77,8 @@ const App = () => {
   
     return newDestinations;
   };
->>>>>>> 0a1b1f1 (delete file then create new filess, image galerry, place, travel destination)
 
   return (
-<<<<<<< HEAD
-    <ApolloProvider client={client}>
-      <Router>
-        <>
-        <Navbar  />
-        <AntdHeader>
-          <AppHeader  />
-        </AntdHeader>
-        {/* <Header style={{ background: '#1890ff', padding: '0 20px' }}>
-          <AppHeader />
-        </Header> */}
-        {/* <Logo /> */}
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route exact path='/saved' component={SavedDestinations} />
-            <Route render={() => <h1 className='display-2'>Wrong page!</h1>} />
-          </Switch>
-          <AppFooter />  
-        </>
-      </Router>
-    </ApolloProvider>
-
-=======
     <div className="app">
       <Header />
       <SearchBar onSearch={handleSearch} />
@@ -170,7 +94,6 @@ const App = () => {
         This is Project 3 From Rice
       </footer>
     </div>
->>>>>>> 0a1b1f1 (delete file then create new filess, image galerry, place, travel destination)
   );
 };
 
