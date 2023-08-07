@@ -43,8 +43,8 @@ function Nav() {
     <header className="flex-row px-1">
       <h1>
         <Link to="/">
-          <span role="img" aria-label="star icon">🌠</span>
-          Travel-Shopping-App
+          <span role="img" aria-label="star icon">🎒🚶✈🚉</span>
+          WanderJo Apps
         </Link>
       </h1>
 
