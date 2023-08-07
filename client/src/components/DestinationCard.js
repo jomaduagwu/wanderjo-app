@@ -1,18 +1,15 @@
 import React from 'react';
-import { Card } from 'antd';
 
-const DestinationCard = ({ name, location, description, image, category }) => {
+const DestinationCard = ({ destination }) => {
+  const { name, date, temperature, description } = destination;
+
   return (
-    <Card
-      hoverable
-      style={{ width: 300, margin: '10px' }}
-      cover={<img alt={name} src={image} />}
-    >
-      <h3>{name}</h3>
-      <p>{location}</p>
-      <p>{description}</p>
-      <p>{category}</p>
-    </Card>
+    <div className="destination-card">
+      <h2>{name}</h2>
+      <p>Date: {date}</p>
+      <p>Temperature: {temperature}&#176;F</p>
+      <p>Description: {description}</p>
+    </div>
   );
 };
 

@@ -1,106 +1,84 @@
 import React, { useState } from 'react';
-import { Form, Input, Button, Alert } from 'antd'; // Import Ant Design components
 import { useMutation } from '@apollo/client';
-import { ADD_USER } from '../utils/mutations';
-import Auth from '../utils/auth';
+import { REGISTER_USER } from '../utils/mutations';
 
-const SignupForm = () => {
-  // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
-  // set state for form validation
-  const [form] = Form.useForm();
-  // set state for alert
-  const [showAlert, setShowAlert] = useState(false);
+const SignupForm = ({ handleModalClose }) => {
+  const [userFormData, setUserFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
 
-  const [addUser, { loading }] = useMutation(ADD_USER);
+  const [addUser, { error, loading }] = useMutation(REGISTER_USER);
 
-  const handleInputChange = (event) => {
+  const handleChange = (event) => {
     const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    setUserFormData({
+      ...userFormData,
+      [name]: value,
+    });
   };
 
-  const handleFormSubmit = async () => {
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
     try {
-      await form.validateFields(); // Validate the form fields using Ant Design form validation
-      const { data } = await addUser({variables: { ...userFormData}, });
-      Auth.login(data.addUser.token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-    };
-  };
+      const { data } = await addUser({
+        variables: { ...userFormData },
+      });
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+      console.log(data); // You can handle the successful registration response here
+
+      handleModalClose(); // Close the signup modal after successful signup
+      // You may also want to handle other logic after successful signup, like displaying a success message or redirecting the user to a different page.
+    } catch (error) {
+      console.error('Error during signup:', error);
+    }
+  };
 
   return (
-    <>
-      {/* This is needed for the validation functionality above */}
-      <Form form={form} onFinish={handleFormSubmit}>
-        {/* show alert if server response is bad */}
-        {showAlert && (
-          <Alert
-            message="Something went wrong with your signup!"
-            type="error"
-            closable
-            onClose={() => setShowAlert(false)}
-            style={{ marginBottom: 16 }}
-          />
-        )}
-
-        <Form.Item
-          label="Username"
+    <form onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          className="form-control"
+          id="username"
           name="username"
-          rules={[{ required: true, message: 'Username is required!' }]}
-        >
-          <Input
-            placeholder="Your username"
-            name="username"
-            onChange={handleInputChange}
-            value={userFormData.username}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Email"
+          value={userFormData.username}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          className="form-control"
+          id="email"
           name="email"
-          rules={[{ required: true, message: 'Email is required!' }]}
-        >
-          <Input
-            type="email"
-            placeholder="Your email address"
-            name="email"
-            onChange={handleInputChange}
-            value={userFormData.email}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Password"
+          value={userFormData.email}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          className="form-control"
+          id="password"
           name="password"
-          rules={[{ required: true, message: 'Password is required!' }]}
-        >
-          <Input.Password
-            placeholder="Your password"
-            name="password"
-            onChange={handleInputChange}
-            value={userFormData.password}
-          />
-        </Form.Item>
-
-        <Form.Item>
-          <Button
-            disabled={!(userFormData.username && userFormData.email && userFormData.password)}
-            type="primary"
-            htmlType="submit"
-            style={{ marginTop: 16 }}
-          >
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </>
+          value={userFormData.password}
+          onChange={handleChange}
+          required
+        />
+      </div>
+      {error && <div className="alert alert-danger">{error.message}</div>}
+      <button type="submit" className="btn btn-primary" disabled={loading}>
+        Sign Up
+      </button>
+    </form>
   );
 };
 
