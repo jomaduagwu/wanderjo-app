@@ -35,7 +35,7 @@ A trip planner to search for travel destinations and find attractions
 
 ## APIs
 
-- OpenTripMap API: Provides data on various points of interest, tourist attractions, and other travel-related information.
+- Unplash API: Provides data on various points of interest, tourist attractions, and other travel-related information.
 
 - Weather API: Provides real-time weather forecasts and conditions for selected destinations.
 
