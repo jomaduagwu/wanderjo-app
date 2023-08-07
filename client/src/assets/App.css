@@ -1,0 +1,48 @@
+/* App.css */
+.nav-container {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo-link {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-image {
+    width: 200px;
+    height: 100px;
+  }
+.app-container {
+    margin: 0 auto;
+    max-width: 800px;
+    padding: 20px;
+  }
+  
+  .search-form {
+    margin: 20px 0;
+  }
+  
+  .search-input {
+    padding: 8px;
+    width: 70%;
+  }
+  
+  .search-button {
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  

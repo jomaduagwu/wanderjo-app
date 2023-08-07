@@ -20,7 +20,7 @@ import Nav from './components/Nav';
 import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
-
+import './assets/App.css';
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -129,7 +129,7 @@ function App() {
                 type="text"
                 value={searchTerm}
                 onChange={handleSearchInputChange}
-                placeholder="Search for a place to go..."
+                placeholder="Search for a place ..."
               />
               <button type="submit">Search</button>
             </form>
