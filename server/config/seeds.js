@@ -26,11 +26,20 @@ db.once('open', async () => {
       quantity: 500
     },
     {
+      name: 'Japanese Box Snacks',
+      description:
+        '"Dagashi" makes people happy. They are loved by young and old. Everyone loves them. Eat what you like and be happy. "Dagashi" is a delicious and fun gift.',
+      image: 'japanese-snacks.png',
+      category: categories[0]._id,
+      price: 22.70,
+      quantity: 50
+    },
+    {
       name: 'Travel Adapter',
       description:
         'A universal travel adapter that allows you to charge your devices in different countries.',
       image: 'travel-adapter.png',
-      category: categories[1]._id,
+      category: categories[2]._id,
       price: 12.99,
       quantity: 200
     },
@@ -69,6 +78,15 @@ db.once('open', async () => {
       category: categories[1]._id,
       price: 39.99,
       quantity: 50
+    },
+    {
+      name: 'Mini Umbrella',
+      description:
+        'Anti-ultraviolet summer outdoor pocket sun umbrella sunny and rainy dual-use sunscreen anti-ultraviolet compact portable pocket umbrella',
+      image: 'mini-umbrella.png',
+      category: categories[1]._id,
+      price: 13.60,
+      quantity: 500
     },
     {
       name: 'Travel Water Bottle',
