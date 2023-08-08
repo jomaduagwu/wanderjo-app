@@ -7,6 +7,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { Row, Col} from 'antd';
 import SearchBar from './components/Destination/SearchBar';
 import DestinationList from './components/Destination/DestinationList';
 import AttractionDetails from './components/Destination/AttractionDetails';
@@ -21,6 +22,7 @@ import { StoreProvider } from './utils/GlobalState';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 import './assets/App.css';
+// import '/antd/dist/antd.css';
 const httpLink = createHttpLink({
   uri: '/graphql',
 });
@@ -92,7 +94,7 @@ function App() {
     const description = weather[0].description;
   
     // Extract relevant information from forecastData
-    const forecastList = forecastData.list.slice(1, 4); 
+    const forecastList = forecastData.list.slice(1, 6); 
     const forecastDestinations = forecastList.map((forecastItem, index) => {
       const forecastDate = new Date(forecastItem.dt_txt);
       const formattedDate = `Day ${index + 1}: ${forecastDate.toLocaleDateString('en-US')}`;
@@ -121,7 +123,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div>
+        <div style={{margin: '20px'}}>
           <StoreProvider>
             <Nav />
             <form onSubmit={handleSearch}>
@@ -133,9 +135,21 @@ function App() {
               />
               <button type="submit">Search</button>
             </form>
+            <div>
+            <Row justify="center" gutter={[16, 16]}>
+              <Col xs={24} md={16} lg={18}>
+                {/* Pass the destinations state to the DestinationList component */}
+                <DestinationList destinations={destinations} />
+              </Col>
+              
+            </Row >
+            {/* <Col xs={24} md={8} lg={6}> */}
+                <ImageGallery searchTerm={destinations.length > 0 ? destinations[0].name : ''} />
+                </div>
+              {/* </Col> */}
             {/* Pass the destinations state to the DestinationList component */}
-            <DestinationList destinations={destinations} />
-            <ImageGallery searchTerm={destinations.length > 0 ? destinations[0].name : ''} />
+            {/* <DestinationList destinations={destinations} />
+            <ImageGallery searchTerm={destinations.length > 0 ? destinations[0].name : ''} /> */}
 
             <Routes>
               <Route 

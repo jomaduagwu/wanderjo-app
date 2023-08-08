@@ -2,6 +2,7 @@ import React from "react";
 import Auth from "../../utils/auth";
 import { Link } from "react-router-dom";
 import logoImage from '../../logoapp.png'; 
+import Logo from '../../assets/updatedWJ-logo.png';
 
 function Nav() {
 
@@ -45,11 +46,11 @@ function Nav() {
       <h1>
       <Link to="/">
           <img
-            src={logoImage}
+            src={Logo}
             alt="WanderJo Logo"
             className="logo-image"
             width="200"
-            height="100"
+            height="200"
           />
         </Link>
 
