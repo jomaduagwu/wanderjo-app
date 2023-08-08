@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "WanderJo App",
+  "name": "WanderJo Travel App",
+  "description": "A travel planner app that runs in the browser and offline",
   "icons": [
     {
       "src": "favicon.ico",
